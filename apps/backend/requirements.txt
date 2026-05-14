@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+pyyaml
+python-hcl2
+groq
+google-generativeai
+chromadb
+sentence-transformers
