@@ -1,104 +1,182 @@
-# 🧠 InfraMind
-
-**Local-first Infrastructure Cognition Layer for Modern DevOps.**
-
-InfraMind is an AI-native infrastructure intelligence platform designed specifically for Terraform. Unlike generic coding assistants or cloud-locked security scanners, InfraMind builds a deterministic, semantic understanding of your infrastructure *locally*, and uses AI reasoning only when you request an architectural deep-dive.
-
-**Stop guessing blast radiuses. Start seeing your infrastructure.**
-
----
-
-## ✨ Features
-
-### 🔍 Deterministic Semantic Parsing
-InfraMind parses raw HCL locally in milliseconds, extracting resources, implicit dependencies, and security heuristics without uploading your codebase to the cloud.
-
-### 🌐 Instant Topology Visualization
-Generate deterministic Mermaid diagrams of your infrastructure architecture with a single command. See your dependencies visually—no dragging and dropping required.
-
-### ⚡ Real-Time IDE Diagnostics
-Type `0.0.0.0/0` and immediately see a critical security diagnostic squiggly right inside your editor. InfraMind creates an instant feedback loop for infrastructure security.
-
-### 💡 Contextual Hover Intelligence
-Hover over any Terraform resource to see:
-- Normalized service boundaries
-- Inbound and outbound connections (blast radius)
-- Heuristically detected security risks
-- Recommended remediation
-
-### 🤖 On-Demand AI Reasoning
-When the deterministic graph isn't enough, press "Explain with AI" to trigger a deep architectural review. The local context engine pipes a structured semantic graph to `llama3-70b-8192` (via Groq) to provide expert-level cloud security and cost insights.
+<div align="center">
+  <img src="https://via.placeholder.com/150" alt="InfraMind Logo" width="150"/>
+  <h1>InfraMind</h1>
+  <p><b>AI-native Infrastructure Intelligence for Terraform, Kubernetes, and Docker.</b></p>
+  
+  [![CI Pipeline](https://img.shields.io/badge/CI-Passing-success)](https://github.com/inframind/inframind/actions)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+  [![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-v1.80%2B-blue)](https://marketplace.visualstudio.com/)
+  [![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
+</div>
 
 ---
 
-## 🏗 Architecture
+## 2. Why InfraMind Exists
 
-We don't believe in "Terraform -> GPT Prompts". 
-InfraMind is built on the philosophy of **Intelligence Density**.
+Modern infrastructure is complex, highly abstracted, and heavily interdependent. Generic AI copilots fail at infrastructure because they attempt to pattern-match code strings without understanding the underlying architectural topology.
 
+InfraMind is not a generic AI assistant. It is a **deterministic infrastructure cognition engine**. 
+
+We parse Terraform, Kubernetes, and Docker locally to build a semantic graph of your infrastructure. This local-first security model ensures your raw infrastructure code never leaves your machine. We only use AI reasoning as an optional, high-leverage layer on top of our structured intelligence.
+
+---
+
+## 3. Core Features
+
+### 🏗️ Terraform Intelligence
+- **Semantic Parsing:** High-fidelity HCL parsing and state extraction.
+- **Diagnostics:** Real-time, inline security and complexity validation.
+- **Topology Visualization:** Automatic blast-radius mapping for AWS resources.
+
+### ☸️ Kubernetes Intelligence
+- **Workload Mapping:** Deep dependency linking between Ingresses, Services, and Deployments.
+- **Security Heuristics:** Pinpoint privileged execution, root escalation, and plaintext secrets.
+- **Dependency Graphing:** Visual representations of your cluster architecture.
+
+### 🐋 Docker Intelligence
+- **Compose Topology:** Deterministic mapping of inter-service network boundaries.
+- **Privileged Detection:** Immediate flagging of dangerous host-level escalations.
+- **Container Security Analysis:** Dockerfile deep-dives for dangerous package and user specs.
+
+### ⚡ VS Code UX
+- **Inline Diagnostics:** Immediate feedback loops powered by debounced local parsing.
+- **Hover Intelligence:** Context-aware infrastructure data on hover.
+- **Topology Graphs:** Interactive Mermaid diagrams rendered natively in Webviews.
+- **Deterministic Responsiveness:** Lightning-fast UI, powered by local evaluation.
+
+### 🧠 AI Reasoning Layer
+- **Groq-powered Analysis:** High-speed LLM insights for complex remediation.
+- **Structured Context Reasoning:** We send the graph, not the raw code.
+- **Token-Efficient Workflows:** Massive cost savings via deterministic pre-processing.
+
+---
+
+## 4. Architecture Overview
+
+InfraMind operates via a strict pipeline to ensure security and speed:
+
+```text
+Terraform / Kubernetes / Docker
+             ↓
+  Semantic Parsing Engine (hcl2 / pyyaml)
+             ↓
+  Dependency Graph Engine
+             ↓
+  Security + Complexity Analysis (Heuristics)
+             ↓
+  Structured Infrastructure Intelligence (InfraSummary)
+             ↓
+  VS Code Diagnostics + Topology Visualization
+             ↓
+  Optional AI Reasoning Layer (Groq LLM)
+```
+
+**Why this architecture?**
+By avoiding raw-code-to-LLM workflows, InfraMind guarantees a **local-first processing** environment. We rely on deterministic parsers to do the heavy lifting, ensuring zero hallucinations for security alerting and immediate feedback speeds. 
+
+---
+
+## 5. Visual Tour (Screenshots)
+
+### Inline Diagnostics
+![Diagnostics Placeholder](https://via.placeholder.com/800x400.png?text=Inline+Diagnostics+Demo)
+
+### Hover Intelligence
+![Hover Intelligence Placeholder](https://via.placeholder.com/800x400.png?text=Hover+Intelligence+Demo)
+
+### Architecture Topology Visualization
+![Topology Placeholder](https://via.placeholder.com/800x400.png?text=Architecture+Visualization+Demo)
+
+### Security Reporting Panel
+![Security Panel Placeholder](https://via.placeholder.com/800x400.png?text=Security+Panel+Demo)
+
+---
+
+## 6. Topology Graph Generation
+
+InfraMind automatically builds architectural maps from your code. 
+
+**Terraform (AWS) Example:**
 ```mermaid
 graph TD
-    A[Raw Terraform .tf] --> B[Local HCL Parser]
-    B --> C[Resource Extraction & Normalization]
-    C --> D[Dependency Resolution Graph]
-    D --> E[Security & Complexity Heuristics]
-    E --> F[Structured Infra Intelligence Context]
-    
-    F --> G[VS Code: Real-time Diagnostics]
-    F --> H[VS Code: Hover Intelligence]
-    F --> I[VS Code: Architecture Topology]
-    
-    F -.->|Optional On-Demand Deep Dive| J[AI Inference Layer Groq/Llama3]
+Internet --> ALB
+ALB --> ECS
+ECS --> RDS
+```
+
+**Kubernetes Example:**
+```mermaid
+graph TD
+Ingress --> Service
+Service --> Deployment
 ```
 
 ---
 
-## 🚀 Getting Started
+## 7. The Local-First Philosophy
 
-InfraMind is built as a fast, modular monorepo. 
+Infrastructure code is the keys to the kingdom. InfraMind adheres strictly to a local-first philosophy:
 
-### Prerequisites
-- Node.js & npm (for VS Code Extension)
-- Python 3.10+ (for Local Context Engine)
-- VS Code `^1.80.0`
+- **Infrastructure Privacy:** Raw source code and hardcoded secrets never touch a cloud API.
+- **Minimal Outbound Context:** If AI reasoning is requested, only the structured dependency graph and metadata are dispatched.
+- **Deterministic Workflows:** Security checks are hardcoded heuristics, ensuring consistency.
+- **Trustworthiness:** We don't require access to your AWS credentials or cloud state files.
 
-### 1. Start the Local Intelligence Backend
+---
+
+## 8. Installation
+
+### Backend Setup (FastAPI)
+1. Clone the repository.
+2. Navigate to the backend: `cd apps/backend`
+3. Install dependencies: `pip install -r requirements.txt`
+4. Provide a Groq API Key (Optional for AI reasoning): `export GROQ_API_KEY=your-key`
+5. Start the server: `uvicorn app.main:app --reload`
+
+### VS Code Extension Setup
+1. Navigate to the extension: `cd apps/vscode-extension`
+2. Install dependencies: `npm install`
+3. Launch the extension: Open in VS Code and press `F5` to open the Extension Development Host.
+
+---
+
+## 9. Development Workflow
+
+We enforce a strict development standard. 
+*   **Compile Extension**: `npm run compile` (inside `apps/vscode-extension`)
+*   **Start Backend**: `uvicorn app.main:app` (inside `apps/backend`)
+*   **Run Regression Suite**: 
 ```bash
-cd apps/backend
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-
-# Start the Fast API parser
-uvicorn app.main:app --reload
+python run_tests.py
 ```
-
-### 2. Run the Extension
-```bash
-cd apps/vscode-extension
-npm install
-npm run compile
-```
-*Open `apps/vscode-extension` in VS Code, and press `F5` to start debugging.*
 
 ---
 
-## 🎯 Philosophy & Positioning
+## 10. Adversarial Test Suite
 
-InfraMind is **not** an "AI DevOps chatbot". 
-It is a **Local-first Infrastructure Cognition Layer**.
+InfraMind ships with a massive, programmatically generated `tests/` directory acting as a formal regression harness.
 
-Infrastructure engineers handle the most sensitive, critical components of a company's technical foundation. Sending entire infrastructure repositories to a black-box cloud LLM on every keystroke is an unacceptable security posture. 
-
-InfraMind parses and understands your topology locally, generating immediate deterministic value (diagnostics, diagrams, dependency trees) at zero cost. It leverages the cloud LLM exclusively as an *on-demand reasoning engine* fed with a structured, pre-digested semantic graph.
-
-**Faster. More Secure. Architecturally Aware.**
+- **Malformed Infra Testing:** Validates that incomplete YAML/HCL won't crash the extension.
+- **False-Positive Validation:** Ensures secure infra isn't incorrectly flagged.
+- **Performance Fixtures:** Stress tests (300+ interwoven resources) validating parsing speed.
 
 ---
 
-## 🗺 Roadmap
+## 11. Roadmap
 
-- **Phase 1:** Feature Freeze & Stabilization *(Current)*
-- **Phase 2:** UX Polish & VS Code Native Styling
-- **Phase 3:** Deterministic Quick Fixes
-- **Phase 4:** Open Source Launch
+- **Phase 1 (Current):** Semantic infrastructure cognition.
+- **Phase 2:** Semantic graph persistence and history.
+- **Phase 3:** Architecture diffing (PR-level topology changes).
+- **Phase 4:** Intelligent remediation suggestions and automated refactoring blocks.
+
+---
+
+## 12. Contributing
+
+Read our full [Contributing Guidelines](CONTRIBUTING.md) to understand our issue workflows, coding standards, and testing expectations. All Pull Requests must pass the `run_tests.py` regression suite.
+
+---
+
+## 13. License
+
+Released under the [MIT License](LICENSE).

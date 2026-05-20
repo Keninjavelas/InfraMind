@@ -1,0 +1,16 @@
+{
+  "expected_risks": [
+    {
+      "severity": "HIGH",
+      "category": "permissions"
+    },
+    {
+      "severity": "HIGH",
+      "category": "networking"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "containers"
+    }
+  ]
+}

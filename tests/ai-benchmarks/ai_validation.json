@@ -1,0 +1,12 @@
+{
+  "prompts": [
+    {
+      "prompt": "Explain the security risks in the terraform/networking folder.",
+      "expected_concepts": [
+        "public exposure",
+        "0.0.0.0/0",
+        "SSH"
+      ]
+    }
+  ]
+}

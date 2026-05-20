@@ -20,8 +20,11 @@ class SecurityAnalyzer:
                 if isinstance(ingress, list):
                     for rule in ingress:
                         if isinstance(rule, dict) and 'cidr_blocks' in rule:
-                            cidr = rule['cidr_blocks']
-                            if "0.0.0.0/0" in cidr or ["0.0.0.0/0"] == cidr:
+                            cidr = rule.get('cidr_blocks', [])
+                            if not isinstance(cidr, list):
+                                cidr = [cidr]
+                            cidr_cleaned = [c.strip('"\'') if isinstance(c, str) else c for c in cidr]
+                            if "0.0.0.0/0" in cidr_cleaned:
                                 risks.append(SecurityRisk(
                                     severity="CRITICAL",
                                     category="networking",
@@ -38,7 +41,7 @@ class SecurityAnalyzer:
         for res in self.resources:
             if res.resource_type == "aws_s3_bucket":
                 acl = res.attributes.get('acl', '')
-                if acl in ['public-read', 'public-read-write']:
+                if isinstance(acl, str) and acl.strip('"\'') in ['public-read', 'public-read-write']:
                     risks.append(SecurityRisk(
                         severity="HIGH",
                         category="storage",
@@ -55,7 +58,11 @@ class SecurityAnalyzer:
         for res in self.resources:
             if res.resource_type in ["aws_iam_policy", "aws_iam_role_policy"]:
                 policy = str(res.attributes.get('policy', ''))
-                if '"Action": "*"' in policy or "'Action': '*'" in policy or '"Action":["*"]' in policy.replace(' ', ''):
+                policy_no_space = policy.replace(' ', '')
+                if ('"Action": "*"' in policy or 
+                    "'Action': '*'" in policy or 
+                    '"Action":["*"]' in policy_no_space or 
+                    'Action="*"' in policy_no_space):
                     risks.append(SecurityRisk(
                         severity="HIGH",
                         category="iam",

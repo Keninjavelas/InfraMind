@@ -6,11 +6,17 @@ export async function analyzeWorkspaceCommand(context: vscode.ExtensionContext) 
     const workspaceFolders = vscode.workspace.workspaceFolders;
     
     if (!workspaceFolders || workspaceFolders.length === 0) {
-        vscode.window.showErrorMessage('InfraMind: Please open a workspace containing Terraform files.');
+        vscode.window.showErrorMessage('InfraMind: Please open a workspace containing Infrastructure files.');
         return;
     }
     
     const rootPath = workspaceFolders[0].uri.fsPath;
+    
+    // Step 1: Show Security Panel immediately with Loading Skeleton
+    SecurityPanel.createOrShow(context.extensionUri);
+    if (SecurityPanel.currentPanel) {
+        SecurityPanel.currentPanel.setLoading();
+    }
     
     vscode.window.withProgress({
         location: vscode.ProgressLocation.Notification,
@@ -18,11 +24,8 @@ export async function analyzeWorkspaceCommand(context: vscode.ExtensionContext) 
         cancellable: false
     }, async (progress) => {
         try {
-            // Step 1: Call Backend to get Structured Intelligence
+            // Step 2: Call Backend to get Structured Intelligence
             const infraSummary = await parseInfrastructure(rootPath);
-            
-            // Step 2: Show Security Panel
-            SecurityPanel.createOrShow(context.extensionUri);
             
             // Step 3: Send data to Webview
             if (SecurityPanel.currentPanel) {

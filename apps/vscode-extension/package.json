@@ -1,14 +1,29 @@
 {
-  "name": "vscode-extension",
+  "name": "inframind",
   "displayName": "InfraMind",
-  "description": "AI Infrastructure Intelligence for Modern DevOps",
+  "description": "AI-native Infrastructure Intelligence for Modern DevOps",
   "version": "0.1.0",
   "publisher": "inframind",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inframind/inframind.git"
+  },
   "engines": {
     "vscode": "^1.80.0"
   },
   "categories": [
-    "Other"
+    "Linters",
+    "Machine Learning",
+    "Programming Languages"
+  ],
+  "keywords": [
+    "terraform",
+    "kubernetes",
+    "docker",
+    "infrastructure",
+    "security",
+    "ai",
+    "diagrams"
   ],
   "activationEvents": [
     "onStartupFinished"

@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secure-deployment
+spec:
+  template:
+    spec:
+      containers:
+      - name: secure-container
+        image: nginx:1.14.2@sha256:1234567890abcdef
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false

@@ -57,8 +57,10 @@ class ResourceExtractor:
             file_path = res_dict.pop('__file_path', None)
             content = res_dict.pop('__content', "")
             
-            for res_type, res_instances in res_dict.items():
-                for res_name, res_attributes in res_instances.items():
+            for raw_res_type, res_instances in res_dict.items():
+                res_type = raw_res_type.strip('"\'')
+                for raw_res_name, res_attributes in res_instances.items():
+                    res_name = raw_res_name.strip('"\'')
                     provider = res_type.split('_')[0] if '_' in res_type else "unknown"
                     service_name = self._normalize_service_name(res_type)
                     line_start = self._find_line_number(content, res_type, res_name) if file_path else None

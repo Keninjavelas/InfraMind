@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: inframind-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false # Set manually in Render dashboard

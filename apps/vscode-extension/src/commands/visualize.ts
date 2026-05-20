@@ -6,11 +6,17 @@ export async function visualizeArchitectureCommand(context: vscode.ExtensionCont
     const workspaceFolders = vscode.workspace.workspaceFolders;
     
     if (!workspaceFolders || workspaceFolders.length === 0) {
-        vscode.window.showErrorMessage('InfraMind: Please open a workspace containing Terraform files.');
+        vscode.window.showErrorMessage('InfraMind: Please open a workspace containing Infrastructure files.');
         return;
     }
     
     const rootPath = workspaceFolders[0].uri.fsPath;
+    
+    // Step 1: Show Architecture Panel immediately with Loading Skeleton
+    ArchitecturePanel.createOrShow(context.extensionUri);
+    if (ArchitecturePanel.currentPanel) {
+        ArchitecturePanel.currentPanel.setLoading();
+    }
     
     vscode.window.withProgress({
         location: vscode.ProgressLocation.Notification,
@@ -18,11 +24,8 @@ export async function visualizeArchitectureCommand(context: vscode.ExtensionCont
         cancellable: false
     }, async (progress) => {
         try {
-            // Step 1: Call Backend to get Diagram
+            // Step 2: Call Backend to get Diagram
             const mermaidData = await getArchitectureDiagram(rootPath);
-            
-            // Step 2: Show Architecture Panel
-            ArchitecturePanel.createOrShow(context.extensionUri);
             
             // Step 3: Send data to Webview
             if (ArchitecturePanel.currentPanel) {
@@ -31,6 +34,9 @@ export async function visualizeArchitectureCommand(context: vscode.ExtensionCont
             
         } catch (error: any) {
             vscode.window.showErrorMessage(`InfraMind Error: ${error.message}. Is the backend running?`);
+            if (ArchitecturePanel.currentPanel) {
+                ArchitecturePanel.currentPanel.setError(error.message);
+            }
         }
     });
 }

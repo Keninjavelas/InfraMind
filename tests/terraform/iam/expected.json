@@ -1,0 +1,8 @@
+{
+  "expected_risks": [
+    {
+      "severity": "HIGH",
+      "category": "iam"
+    }
+  ]
+}
