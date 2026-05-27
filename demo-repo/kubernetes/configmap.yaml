@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-config
+  namespace: default
+  labels:
+    app: demo-app
+data:
+  APP_COLOR: "blue"
+  LOG_LEVEL: "debug"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: demo-db-secret
+  namespace: default
+type: Opaque
+data:
+  # Base64 encoded plaintext secrets
+  username: ZGVtb2FkbWlu
+  password: cGFzc3dvcmQxMjM=

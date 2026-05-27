@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    # CRITICAL: Compose service runs as privileged
+    privileged: true
+    depends_on:
+      - backend
+
+  backend:
+    build: .
+    # HIGH: Compose service uses host networking
+    network_mode: host
+    # CRITICAL: Docker socket mounted in container
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: demodb
+      POSTGRES_USER: dbuser
+      POSTGRES_PASSWORD: password123
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app-deployment
+  namespace: default
+  labels:
+    app: demo-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+        - name: web-container
+          image: nginx:latest # MEDIUM: latest image tag
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          securityContext:
+            privileged: true # CRITICAL: privileged container
+            runAsUser: 0 # HIGH: run as root
+          # Plaintext environment secret
+          env:
+            - name: DATABASE_PASSWORD
+              value: "demo-secure-password-12345"
+          envFrom:
+            - configMapRef:
+                name: demo-config
+            - secretRef:
+                name: demo-db-secret
+          # Missing resource limits (no resources section specified)
