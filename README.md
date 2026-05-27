@@ -1,6 +1,5 @@
 <div align="center">
-  <img src="assets/logo.png" alt="InfraMind Logo" width="250"/>
-  <h1>InfraMind</h1>
+  <img src="assets/logo.png" alt="InfraMind Logo" width="450"/>
   <p><b>AI-native Infrastructure Intelligence for Terraform, Kubernetes, and Docker.</b></p>
   
   [![CI Pipeline](https://img.shields.io/badge/CI-Passing-success)](https://github.com/inframind/inframind/actions)
