@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://via.placeholder.com/150" alt="InfraMind Logo" width="150"/>
+  <img src="assets/logo.png" alt="InfraMind Logo" width="150"/>
   <h1>InfraMind</h1>
   <p><b>AI-native Infrastructure Intelligence for Terraform, Kubernetes, and Docker.</b></p>
   
