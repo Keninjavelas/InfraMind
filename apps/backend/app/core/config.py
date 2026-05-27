@@ -1,5 +1,6 @@
 import os
-from dotenv import load_dotenv, find_dotenv
+
+from dotenv import find_dotenv, load_dotenv
 
 # Load environment variables from .env file, walking up the tree to find the root .env
 load_dotenv(find_dotenv())

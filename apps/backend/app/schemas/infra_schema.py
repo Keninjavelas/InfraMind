@@ -1,5 +1,7 @@
-from pydantic import BaseModel
 from typing import List, Optional
+
+from pydantic import BaseModel
+
 
 class Resource(BaseModel):
     resource_type: str
@@ -10,10 +12,12 @@ class Resource(BaseModel):
     file_path: Optional[str] = None
     line_start: Optional[int] = None
 
+
 class Dependency(BaseModel):
     source: str
     target: str
     relationship: str
+
 
 class SecurityRisk(BaseModel):
     severity: str
@@ -24,11 +28,13 @@ class SecurityRisk(BaseModel):
     file_path: Optional[str] = None
     line_number: Optional[int] = None
 
+
 class ComplexityMetrics(BaseModel):
     total_resources: int
     public_exposure_count: int
     iam_risk_count: int
     network_depth: int
+
 
 class InfraSummary(BaseModel):
     services: List[str]

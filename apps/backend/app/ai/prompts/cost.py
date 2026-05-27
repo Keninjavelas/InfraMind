@@ -6,6 +6,7 @@ Focus on:
 3. Scaling inefficiencies and cheaper alternatives.
 Be analytical and provide actionable cost-saving recommendations."""
 
+
 def build_cost_prompt(infra_summary: str, user_query: str) -> str:
     return f"""
 INFRASTRUCTURE CONTEXT:

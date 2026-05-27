@@ -6,6 +6,7 @@ Focus on:
 3. Providing concrete remediation steps.
 Be direct, analytical, and professional."""
 
+
 def build_security_prompt(infra_summary: str, user_query: str) -> str:
     return f"""
 INFRASTRUCTURE CONTEXT (Focus on security_risks and dependencies):

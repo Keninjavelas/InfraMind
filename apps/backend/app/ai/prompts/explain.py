@@ -6,6 +6,7 @@ Focus on:
 3. Purpose of the major components.
 Do not hallucinate. Base your reasoning entirely on the provided structured intelligence context."""
 
+
 def build_explain_prompt(infra_summary: str, user_query: str) -> str:
     return f"""
 INFRASTRUCTURE CONTEXT:
