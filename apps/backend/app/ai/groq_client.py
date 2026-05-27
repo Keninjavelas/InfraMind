@@ -1,14 +1,15 @@
-import os
 from groq import Groq
+from app.core.config import GROQ_API_KEY
 
 class GroqClient:
     def __init__(self):
-        self.api_key = os.getenv("GROQ_API_KEY")
+        self.api_key = GROQ_API_KEY
         if not self.api_key:
              self.client = None
              print("WARNING: GROQ_API_KEY not set")
         else:
              self.client = Groq(api_key=self.api_key)
+
         
         # Use llama3-70b-8192 as default for complex reasoning
         self.model = "llama3-70b-8192" 

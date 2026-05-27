@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.pytest_cache/
+
+# Environment Files
+.env
+.env.*
+
+# Node / VS Code
+node_modules/
+dist/
+out/
+.vscode-test/
+
+# Build Artifacts
+*.vsix
+coverage/
+htmlcov/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE Files
+.vscode/
+.idea/

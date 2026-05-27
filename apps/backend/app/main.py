@@ -1,16 +1,26 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import os
+import sys
 from app.context_builder.builder import ContextBuilder
 from app.schemas.infra_schema import InfraSummary
 from app.ai.orchestrator import AIOrchestrator
 from app.diagrams.mermaid import MermaidGenerator
+from app.core.config import GROQ_API_KEY
 
 app = FastAPI(
     title="InfraMind API",
     description="Backend API for InfraMind - AI Infrastructure Intelligence",
     version="0.1.0",
 )
+
+@app.on_event("startup")
+def startup_event():
+    if not GROQ_API_KEY:
+        print("ERROR: GROQ_API_KEY missing.", file=sys.stderr)
+        print("Please configure your .env file.", file=sys.stderr)
+        sys.exit(1)
+
 
 class ParseRequest(BaseModel):
     directory_path: str
