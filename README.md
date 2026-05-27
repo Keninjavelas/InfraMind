@@ -79,16 +79,22 @@ By avoiding raw-code-to-LLM workflows, InfraMind guarantees a **local-first proc
 ## 5. Visual Tour (Screenshots)
 
 ### Inline Diagnostics
-![Diagnostics Placeholder](https://via.placeholder.com/800x400.png?text=Inline+Diagnostics+Demo)
+![Inline Diagnostics](assets/inline_diagnostics.png)
 
 ### Hover Intelligence
-![Hover Intelligence Placeholder](https://via.placeholder.com/800x400.png?text=Hover+Intelligence+Demo)
+![Hover Intelligence](assets/hover_intelligence.png)
 
 ### Architecture Topology Visualization
-![Topology Placeholder](https://via.placeholder.com/800x400.png?text=Architecture+Visualization+Demo)
+![Architecture Topology Visualization](assets/mermaid_topology.png)
 
 ### Security Reporting Panel
-![Security Panel Placeholder](https://via.placeholder.com/800x400.png?text=Security+Panel+Demo)
+![Security Reporting Panel](assets/security_panel.png)
+
+### Kubernetes Intelligence
+![Kubernetes Intelligence](assets/k8s_intelligence.png)
+
+### Docker Intelligence
+![Docker Intelligence](assets/docker_intelligence.png)
 
 ---
 
