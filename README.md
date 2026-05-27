@@ -1,11 +1,10 @@
 <div align="center">
-  <img src="assets/logo.png" alt="InfraMind Logo" width="450"/>
-  <p><b>AI-native Infrastructure Intelligence for Terraform, Kubernetes, and Docker.</b></p>
-  
-  [![CI Pipeline](https://img.shields.io/badge/CI-Passing-success)](https://github.com/inframind/inframind/actions)
-  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-  [![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-v1.80%2B-blue)](https://marketplace.visualstudio.com/)
-  [![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
+  <img src="assets/logo.png" alt="InfraMind Logo" width="350"/><br/>
+  <p style="margin: 10px 0;"><b>AI-native Infrastructure Intelligence for Terraform, Kubernetes, and Docker.</b></p>
+  <a href="https://github.com/inframind/inframind/actions"><img src="https://img.shields.io/badge/CI-Passing-success" alt="CI Pipeline"/></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"/></a>
+  <a href="https://marketplace.visualstudio.com/"><img src="https://img.shields.io/badge/VS%20Code-v1.80%2B-blue" alt="VS Code Marketplace"/></a>
+  <a href="https://python.org"><img src="https://img.shields.io/badge/Python-3.10%2B-blue" alt="Python Version"/></a>
 </div>
 
 ---
