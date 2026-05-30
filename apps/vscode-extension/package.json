@@ -39,7 +39,22 @@
         "command": "inframind.visualizeArchitecture",
         "title": "InfraMind: Visualize Architecture"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "InfraMind",
+      "properties": {
+        "inframind.provider": {
+          "type": "string",
+          "default": "groq",
+          "description": "The AI provider to use for explanations and reviews."
+        },
+        "inframind.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "User-supplied API Key for AI operations (overrides server-side keys)."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

@@ -9,3 +9,4 @@ google-generativeai
 chromadb
 sentence-transformers
 python-dotenv
+slowapi

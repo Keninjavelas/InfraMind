@@ -4,8 +4,8 @@ from app.schemas.infra_schema import InfraSummary
 
 
 class AIOrchestrator:
-    def __init__(self):
-        self.client = GroqClient()
+    def __init__(self, api_key: str = None):
+        self.client = GroqClient(api_key=api_key)
 
     def _summary_to_json(self, summary: InfraSummary) -> str:
         return summary.model_dump_json(indent=2)

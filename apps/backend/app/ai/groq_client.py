@@ -1,10 +1,11 @@
 from app.core.config import GROQ_API_KEY
 from groq import Groq
+from app.ai.provider_base import AIProvider
 
 
-class GroqClient:
-    def __init__(self):
-        self.api_key = GROQ_API_KEY
+class GroqClient(AIProvider):
+    def __init__(self, api_key: str = None):
+        self.api_key = api_key or GROQ_API_KEY
         if not self.api_key:
             self.client = None
             print("WARNING: GROQ_API_KEY not set")
@@ -28,3 +29,4 @@ class GroqClient:
             max_tokens=2048,
         )
         return completion.choices[0].message.content
+
