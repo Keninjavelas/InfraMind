@@ -1,5 +1,5 @@
 import re
-from typing import Any, Dict, List
+from typing import Any, List
 
 from app.schemas.infra_schema import Dependency, Resource
 

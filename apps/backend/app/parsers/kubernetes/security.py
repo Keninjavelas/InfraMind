@@ -107,7 +107,10 @@ class KubernetesSecurityAnalyzer:
                         severity="HIGH",
                         category="secrets",
                         description="Secret defined directly in manifest",
-                        recommendation="Use external secret management (e.g. AWS Secrets Manager, HashiCorp Vault) or Sealed Secrets.",
+                        recommendation=(
+                            "Use external secret management (e.g. AWS Secrets Manager, HashiCorp Vault) "
+                            "or Sealed Secrets."
+                        ),
                         resource_id=f"{res.resource_type}.{res.name}",
                         file_path=res.file_path,
                         line_number=res.line_start,

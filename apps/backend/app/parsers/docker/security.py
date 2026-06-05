@@ -104,7 +104,10 @@ class DockerSecurityAnalyzer:
                                 severity="CRITICAL",
                                 category="permissions",
                                 description="Docker socket mounted in container",
-                                recommendation="Avoid mounting the docker socket, as it allows container escape and root access to the host.",
+                                recommendation=(
+                                    "Avoid mounting the docker socket, as it allows container escape "
+                                    "and root access to the host."
+                                ),
                                 resource_id=f"{res.resource_type}.{res.name}",
                                 file_path=res.file_path,
                                 line_number=res.line_start,

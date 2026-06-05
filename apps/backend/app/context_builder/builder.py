@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import List
 
 from app.parsers.docker.dependencies import DockerDependencySolver
 from app.parsers.docker.parser import DockerParser

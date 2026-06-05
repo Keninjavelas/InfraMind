@@ -3,16 +3,18 @@ import os
 import sys
 import time
 
+# Add backend to path for imports
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), "apps", "backend"))
 )
-from app.context_builder.builder import ContextBuilder
+
+from app.context_builder.builder import ContextBuilder  # noqa: E402
 
 TESTS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "tests"))
 
 
 def run_regression_suite():
-    print(f"=== Starting InfraMind Regression Suite ===")
+    print("=== Starting InfraMind Regression Suite ===")
 
     total_tests = 0
     passed_tests = 0

@@ -1,4 +1,4 @@
-import re
+import os
 from typing import Any, Dict, List
 
 from app.schemas.infra_schema import Resource
@@ -82,6 +82,3 @@ class DockerResourceExtractor:
                 )
 
         return resources
-
-
-import os

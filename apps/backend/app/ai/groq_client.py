@@ -17,7 +17,10 @@ class GroqClient(AIProvider):
 
     def generate(self, system_prompt: str, user_prompt: str) -> str:
         if not self.client:
-            return "MOCK AI RESPONSE: Groq API key is missing. This is where the AI reasoning would appear based on the structured context."
+            return (
+                "MOCK AI RESPONSE: Groq API key is missing. "
+                "This is where the AI reasoning would appear based on the structured context."
+            )
 
         completion = self.client.chat.completions.create(
             model=self.model,

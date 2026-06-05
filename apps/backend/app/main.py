@@ -1,7 +1,7 @@
 import asyncio
 import os
 import sys
-from typing import Any, List, Optional
+from typing import List, Optional
 
 from app.ai.orchestrator import AIOrchestrator
 from app.context_builder.builder import ContextBuilder
@@ -17,7 +17,7 @@ from app.schemas.infra_schema import (
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 

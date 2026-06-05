@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import List
 
 from app.schemas.infra_schema import Dependency, Resource
 
