@@ -7,8 +7,13 @@ from app.ai.orchestrator import AIOrchestrator
 from app.context_builder.builder import ContextBuilder
 from app.core.config import GROQ_API_KEY
 from app.diagrams.mermaid import MermaidGenerator
-from app.schemas.infra_schema import (ComplexityMetrics, Dependency,
-                                      InfraSummary, Resource, SecurityRisk)
+from app.schemas.infra_schema import (
+    ComplexityMetrics,
+    Dependency,
+    InfraSummary,
+    Resource,
+    SecurityRisk,
+)
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
