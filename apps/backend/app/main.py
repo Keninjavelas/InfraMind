@@ -1,26 +1,20 @@
+import asyncio
 import os
 import sys
-import asyncio
-from typing import Optional, List, Any
+from typing import Any, List, Optional
+
+from app.ai.orchestrator import AIOrchestrator
+from app.context_builder.builder import ContextBuilder
+from app.core.config import GROQ_API_KEY
+from app.diagrams.mermaid import MermaidGenerator
+from app.schemas.infra_schema import (ComplexityMetrics, Dependency,
+                                      InfraSummary, Resource, SecurityRisk)
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-
 from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
-
-from app.core.config import GROQ_API_KEY
-from app.context_builder.builder import ContextBuilder
-from app.diagrams.mermaid import MermaidGenerator
-from app.ai.orchestrator import AIOrchestrator
-from app.schemas.infra_schema import (
-    InfraSummary,
-    Resource,
-    Dependency,
-    SecurityRisk,
-    ComplexityMetrics,
-)
+from slowapi.util import get_remote_address
 
 # Initialize slowapi rate limiter
 limiter = Limiter(key_func=get_remote_address)

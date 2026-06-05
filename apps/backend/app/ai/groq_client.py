@@ -1,6 +1,6 @@
+from app.ai.provider_base import AIProvider
 from app.core.config import GROQ_API_KEY
 from groq import Groq
-from app.ai.provider_base import AIProvider
 
 
 class GroqClient(AIProvider):

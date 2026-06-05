@@ -8,19 +8,15 @@ from app.parsers.kubernetes.dependencies import KubernetesDependencySolver
 from app.parsers.kubernetes.parser import KubernetesParser
 from app.parsers.kubernetes.resources import KubernetesResourceExtractor
 from app.parsers.kubernetes.security import KubernetesSecurityAnalyzer
-from app.parsers.terraform.dependencies import (
-    DependencyResolver as TFDependencyResolver,
-)
+from app.parsers.terraform.dependencies import \
+    DependencyResolver as TFDependencyResolver
 from app.parsers.terraform.parser import TerraformParser
-from app.parsers.terraform.resources import ResourceExtractor as TFResourceExtractor
-from app.parsers.terraform.security import SecurityAnalyzer as TFSecurityAnalyzer
-from app.schemas.infra_schema import (
-    ComplexityMetrics,
-    Dependency,
-    InfraSummary,
-    Resource,
-    SecurityRisk,
-)
+from app.parsers.terraform.resources import \
+    ResourceExtractor as TFResourceExtractor
+from app.parsers.terraform.security import \
+    SecurityAnalyzer as TFSecurityAnalyzer
+from app.schemas.infra_schema import (ComplexityMetrics, Dependency,
+                                      InfraSummary, Resource, SecurityRisk)
 
 
 class ContextBuilder:
