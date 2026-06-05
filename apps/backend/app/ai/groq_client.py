@@ -29,4 +29,3 @@ class GroqClient(AIProvider):
             max_tokens=2048,
         )
         return completion.choices[0].message.content
-

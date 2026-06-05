@@ -33,13 +33,18 @@ app = FastAPI(
 
 app.state.limiter = limiter
 
+
 # Custom rate limit exception handler to yield a graceful fallback response
 @app.exception_handler(RateLimitExceeded)
 async def custom_rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded):
     try:
         body = await request.json()
         directory_path = body.get("directory_path")
-        if directory_path and os.path.exists(directory_path) and os.path.isdir(directory_path):
+        if (
+            directory_path
+            and os.path.exists(directory_path)
+            and os.path.isdir(directory_path)
+        ):
             builder = ContextBuilder(directory_path)
             summary = builder.build_context()
             return JSONResponse(
@@ -52,7 +57,9 @@ async def custom_rate_limit_exceeded_handler(request: Request, exc: RateLimitExc
                     "services": summary.services,
                     "resources": [r.model_dump() for r in summary.resources],
                     "dependencies": [d.model_dump() for d in summary.dependencies],
-                    "security_risks": [sr.model_dump() for sr in summary.security_risks],
+                    "security_risks": [
+                        sr.model_dump() for sr in summary.security_risks
+                    ],
                     "metrics": summary.metrics.model_dump(),
                     "estimated_complexity": summary.estimated_complexity,
                     "architecture_summary": summary.architecture_summary,
