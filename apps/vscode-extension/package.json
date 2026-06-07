@@ -3,11 +3,14 @@
   "displayName": "InfraMind",
   "description": "AI-native Infrastructure Intelligence for Modern DevOps",
   "version": "0.1.0",
-  "publisher": "inframind",
+  "publisher": "aryankapoor-keninjavelas",
+  "author": {
+    "name": "Aryan Kapoor / Keninjavelas"
+  },
   "icon": "assets/logo.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/inframind/inframind.git"
+    "url": "https://github.com/Keninjavelas/InfraMind.git"
   },
   "engines": {
     "vscode": "^1.80.0"
@@ -39,6 +42,10 @@
       {
         "command": "inframind.visualizeArchitecture",
         "title": "InfraMind: Visualize Architecture"
+      },
+      {
+        "command": "inframind.openSettings",
+        "title": "InfraMind: Open Settings"
       }
     ],
     "configuration": {

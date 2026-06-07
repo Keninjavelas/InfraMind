@@ -3,7 +3,7 @@ import * as https from 'https';
 import * as http from 'http';
 import { URL } from 'url';
 
-function getBackendUrl(): string {
+export function getBackendUrl(): string {
     const config = vscode.workspace.getConfiguration("inframind");
     return config.get<string>(
         "backendUrl",

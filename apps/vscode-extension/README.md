@@ -40,6 +40,10 @@ We parse Terraform, Kubernetes, and Docker locally to build a semantic graph of 
 - `inframind.provider`: The AI provider to use for explanations and reviews (default: `groq`).
 - `inframind.apiKey`: User-supplied API Key for AI operations (overrides server-side keys).
 
+---
+
+**Created and maintained by [Aryan Kapoor / Keninjavelas](https://github.com/Keninjavelas/InfraMind)**
+
 ## License
 
 MIT

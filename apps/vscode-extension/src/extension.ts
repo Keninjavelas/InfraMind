@@ -3,6 +3,7 @@ import { analyzeWorkspaceCommand } from './commands/analyze';
 import { visualizeArchitectureCommand } from './commands/visualize';
 import { InfraMindDiagnostics } from './diagnostics';
 import { InfraMindHoverProvider } from './hover/provider';
+import { SettingsPanel } from './panels/settingsPanel';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('InfraMind extension is now active!');
@@ -30,12 +31,17 @@ export function activate(context: vscode.ExtensionContext) {
 		visualizeArchitectureCommand(context);
 	});
 
+    let settingsDisposable = vscode.commands.registerCommand('inframind.openSettings', () => {
+        SettingsPanel.render(context.extensionUri);
+    });
+
     let explainDisposable = vscode.commands.registerCommand('inframind.explainResource', () => {
 		vscode.window.showInformationMessage("InfraMind AI: This resource is part of the core infrastructure. AI deep-dive coming in the next update!");
 	});
 
 	context.subscriptions.push(analyzeDisposable);
 	context.subscriptions.push(visualizeDisposable);
+    context.subscriptions.push(settingsDisposable);
     context.subscriptions.push(explainDisposable);
 }
 
