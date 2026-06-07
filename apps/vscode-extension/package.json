@@ -46,8 +46,48 @@
       {
         "command": "inframind.openSettings",
         "title": "InfraMind: Open Settings"
+      },
+      {
+        "command": "inframind.refreshSidebar",
+        "title": "InfraMind: Refresh Sidebar",
+        "icon": "$(refresh)"
       }
     ],
+    "viewContainers": {
+      "activitybar": [
+        {
+          "id": "inframind",
+          "title": "InfraMind",
+          "icon": "assets/activity-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "inframind": [
+        {
+          "id": "inframind.securityView",
+          "name": "Security Risks",
+          "icon": "assets/activity-icon.svg"
+        },
+        {
+          "id": "inframind.architectureView",
+          "name": "Architecture Topology"
+        },
+        {
+          "id": "inframind.actionsView",
+          "name": "Quick Actions"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "inframind.refreshSidebar",
+          "when": "viewContainer == inframind",
+          "group": "navigation"
+        }
+      ]
+    },
     "configuration": {
       "title": "InfraMind",
       "properties": {
@@ -65,6 +105,16 @@
           "type": "string",
           "default": "https://inframind-hqrl.onrender.com",
           "description": "The URL of the InfraMind backend service."
+        },
+        "inframind.model": {
+          "type": "string",
+          "default": "",
+          "description": "Specific AI model to use (e.g., gpt-4o, claude-3-5-sonnet, llama3)."
+        },
+        "inframind.ollamaHost": {
+          "type": "string",
+          "default": "http://localhost:11434",
+          "description": "The host URL for local Ollama instance."
         }
       }
     }

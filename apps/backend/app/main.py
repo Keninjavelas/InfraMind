@@ -89,6 +89,9 @@ def startup_event():
 class ParseRequest(BaseModel):
     directory_path: str
     api_key: Optional[str] = None
+    provider: Optional[str] = "auto"
+    model: Optional[str] = None
+    base_url: Optional[str] = None
 
 
 class AIReviewResponse(BaseModel):
@@ -174,7 +177,12 @@ async def explain_infrastructure(request: Request, parse_request: ParseRequest):
         )
 
     try:
-        orchestrator = AIOrchestrator(api_key=parse_request.api_key)
+        orchestrator = AIOrchestrator(
+            provider=parse_request.provider or "auto",
+            api_key=parse_request.api_key,
+            model=parse_request.model,
+            base_url=parse_request.base_url
+        )
         # Timeout at 30 seconds
         result = await asyncio.wait_for(
             asyncio.to_thread(orchestrator.explain_infrastructure, summary),

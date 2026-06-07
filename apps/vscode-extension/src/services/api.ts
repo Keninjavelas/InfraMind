@@ -11,11 +11,22 @@ export function getBackendUrl(): string {
     ).replace(/\/$/, '');
 }
 
-async function makeRequest(path: string, postData: string): Promise<string> {
+function getAIConfig() {
+    const config = vscode.workspace.getConfiguration("inframind");
+    return {
+        apiKey: config.get<string>("apiKey", ""),
+        provider: config.get<string>("provider", "auto"),
+        model: config.get<string>("model", ""),
+        baseUrl: config.get<string>("ollamaHost", "http://localhost:11434")
+    };
+}
+
+async function makeRequest(path: string, postData: any): Promise<string> {
     const baseUrl = getBackendUrl();
     const url = new URL(`${baseUrl}${path}`);
     const isHttps = url.protocol === 'https:';
     const requestModule = isHttps ? https : http;
+    const body = JSON.stringify(postData);
 
     return new Promise((resolve, reject) => {
         const options = {
@@ -25,7 +36,7 @@ async function makeRequest(path: string, postData: string): Promise<string> {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(postData)
+                'Content-Length': Buffer.byteLength(body)
             }
         };
 
@@ -42,20 +53,34 @@ async function makeRequest(path: string, postData: string): Promise<string> {
         });
 
         req.on('error', (e) => reject(e));
-        req.write(postData);
+        req.write(body);
         req.end();
     });
 }
 
 export async function parseInfrastructure(directoryPath: string): Promise<any> {
-    const postData = JSON.stringify({ directory_path: directoryPath });
-    const response = await makeRequest('/api/v1/parse', postData);
+    const aiConfig = getAIConfig();
+    const payload = { 
+        directory_path: directoryPath,
+        api_key: aiConfig.apiKey,
+        provider: aiConfig.provider,
+        model: aiConfig.model,
+        base_url: aiConfig.baseUrl
+    };
+    const response = await makeRequest('/api/v1/parse', payload);
     return JSON.parse(response);
 }
 
 export async function getArchitectureDiagram(directoryPath: string): Promise<string> {
-    const postData = JSON.stringify({ directory_path: directoryPath });
-    const response = await makeRequest('/api/v1/diagram', postData);
+    const aiConfig = getAIConfig();
+    const payload = { 
+        directory_path: directoryPath,
+        api_key: aiConfig.apiKey,
+        provider: aiConfig.provider,
+        model: aiConfig.model,
+        base_url: aiConfig.baseUrl
+    };
+    const response = await makeRequest('/api/v1/diagram', payload);
     const result = JSON.parse(response);
     return result.mermaid;
 }

@@ -4,6 +4,7 @@ import { visualizeArchitectureCommand } from './commands/visualize';
 import { InfraMindDiagnostics } from './diagnostics';
 import { InfraMindHoverProvider } from './hover/provider';
 import { SettingsPanel } from './panels/settingsPanel';
+import { SidebarProvider } from './panels/sidebarProvider';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('InfraMind extension is now active!');
@@ -11,20 +12,37 @@ export function activate(context: vscode.ExtensionContext) {
 	const diagnosticsEngine = new InfraMindDiagnostics();
 	context.subscriptions.push(diagnosticsEngine);
 
+    // Sidebar Providers
+    const securityProvider = new SidebarProvider('security');
+    const architectureProvider = new SidebarProvider('architecture');
+    const actionsProvider = new SidebarProvider('actions');
+
+    vscode.window.registerTreeDataProvider('inframind.securityView', securityProvider);
+    vscode.window.registerTreeDataProvider('inframind.architectureView', architectureProvider);
+    vscode.window.registerTreeDataProvider('inframind.actionsView', actionsProvider);
+
 	vscode.workspace.onDidSaveTextDocument(document => {
-		diagnosticsEngine.updateDiagnostics(document);
+		diagnosticsEngine.updateDiagnostics(document).then(() => {
+            securityProvider.refresh();
+        });
 	});
 
     if (vscode.window.activeTextEditor) {
-        diagnosticsEngine.updateDiagnostics(vscode.window.activeTextEditor.document);
+        diagnosticsEngine.updateDiagnostics(vscode.window.activeTextEditor.document).then(() => {
+            securityProvider.refresh();
+        });
     }
 
-    // Register Hover
-    const hoverProvider = vscode.languages.registerHoverProvider('terraform', new InfraMindHoverProvider());
-    context.subscriptions.push(hoverProvider);
+    // Commands
+    let refreshSidebarDisposable = vscode.commands.registerCommand('inframind.refreshSidebar', () => {
+        securityProvider.refresh();
+        architectureProvider.refresh();
+        actionsProvider.refresh();
+    });
 
-	let analyzeDisposable = vscode.commands.registerCommand('inframind.analyzeWorkspace', () => {
-		analyzeWorkspaceCommand(context);
+	let analyzeDisposable = vscode.commands.registerCommand('inframind.analyzeWorkspace', async () => {
+		await analyzeWorkspaceCommand(context);
+        securityProvider.refresh();
 	});
 
 	let visualizeDisposable = vscode.commands.registerCommand('inframind.visualizeArchitecture', () => {
@@ -42,7 +60,12 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(analyzeDisposable);
 	context.subscriptions.push(visualizeDisposable);
     context.subscriptions.push(settingsDisposable);
+    context.subscriptions.push(refreshSidebarDisposable);
     context.subscriptions.push(explainDisposable);
+
+    // Register Hover
+    const hoverProvider = vscode.languages.registerHoverProvider('terraform', new InfraMindHoverProvider());
+    context.subscriptions.push(hoverProvider);
 }
 
 export function deactivate() {}

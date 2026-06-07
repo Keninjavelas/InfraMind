@@ -44,8 +44,10 @@ export class SettingsPanel {
     private _getWebviewContent() {
         const config = vscode.workspace.getConfiguration("inframind");
         const backendUrl = config.get<string>("backendUrl", "https://inframind-hqrl.onrender.com");
-        const provider = config.get<string>("provider", "groq");
+        const provider = config.get<string>("provider", "auto");
         const apiKey = config.get<string>("apiKey", "");
+        const model = config.get<string>("model", "");
+        const ollamaHost = config.get<string>("ollamaHost", "http://localhost:11434");
 
         return `<!DOCTYPE html>
         <html lang="en">
@@ -59,6 +61,7 @@ export class SettingsPanel {
                 .section { margin-bottom: 25px; padding: 15px; border: 1px solid var(--vscode-panel-border); border-radius: 4px; }
                 .section-title { font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
                 .form-group { margin-bottom: 15px; }
+                .form-group.hidden { display: none; }
                 label { display: block; margin-bottom: 5px; font-size: 0.9em; opacity: 0.8; }
                 input, select { width: 100%; padding: 8px; box-sizing: border-box; background: var(--vscode-input-background); color: var(--vscode-input-foreground); border: 1px solid var(--vscode-input-border); border-radius: 2px; }
                 .button-group { display: flex; gap: 10px; margin-top: 20px; }
@@ -71,6 +74,7 @@ export class SettingsPanel {
                 .status.error { display: block; background: rgba(241, 76, 76, 0.2); color: #f14c4c; border: 1px solid #f14c4c; }
                 .about { text-align: center; margin-top: 40px; opacity: 0.7; font-size: 0.85em; }
                 .creator { font-weight: bold; color: var(--vscode-textLink-foreground); }
+                .hint { font-size: 0.8em; opacity: 0.6; margin-top: 4px; }
             </style>
         </head>
         <body>
@@ -90,14 +94,30 @@ export class SettingsPanel {
                     <div class="form-group">
                         <label for="provider">AI Provider</label>
                         <select id="provider">
-                            <option value="groq" ${provider === 'groq' ? 'selected' : ''}>Groq (Fastest)</option>
-                            <option value="openai" ${provider === 'openai' ? 'selected' : ''}>OpenAI (Coming Soon)</option>
-                            <option value="gemini" ${provider === 'gemini' ? 'selected' : ''}>Gemini (Coming Soon)</option>
+                            <option value="auto" ${provider === 'auto' ? 'selected' : ''}>Auto-detect (Recommended)</option>
+                            <option value="groq" ${provider === 'groq' ? 'selected' : ''}>Groq</option>
+                            <option value="openai" ${provider === 'openai' ? 'selected' : ''}>OpenAI</option>
+                            <option value="anthropic" ${provider === 'anthropic' ? 'selected' : ''}>Anthropic</option>
+                            <option value="gemini" ${provider === 'gemini' ? 'selected' : ''}>Gemini</option>
+                            <option value="openrouter" ${provider === 'openrouter' ? 'selected' : ''}>OpenRouter</option>
+                            <option value="ollama" ${provider === 'ollama' ? 'selected' : ''}>Ollama (Local)</option>
                         </select>
+                        <div class="hint" id="providerHint">Auto-detects provider based on your API key format.</div>
                     </div>
-                    <div class="form-group">
-                        <label for="apiKey">Groq API Key</label>
-                        <input type="password" id="apiKey" value="${apiKey}" placeholder="Enter your gsk_...">
+
+                    <div class="form-group" id="apiKeyGroup">
+                        <label id="apiKeyLabel" for="apiKey">API Key</label>
+                        <input type="password" id="apiKey" value="${apiKey}" placeholder="Enter your API key...">
+                    </div>
+
+                    <div class="form-group hidden" id="modelGroup">
+                        <label for="model">Model Name</label>
+                        <input type="text" id="model" value="${model}" placeholder="e.g. gpt-4o, claude-3-5-sonnet, llama3">
+                    </div>
+
+                    <div class="form-group hidden" id="ollamaHostGroup">
+                        <label for="ollamaHost">Ollama Host</label>
+                        <input type="text" id="ollamaHost" value="${ollamaHost}" placeholder="http://localhost:11434">
                     </div>
                 </div>
 
@@ -119,38 +139,82 @@ export class SettingsPanel {
 
             <script>
                 const vscode = acquireVsCodeApi();
-                const saveBtn = document.getElementById('saveBtn');
-                const testBtn = document.getElementById('testBtn');
-                const statusDiv = document.getElementById('status');
+                const providerSelect = document.getElementById('provider');
+                const apiKeyGroup = document.getElementById('apiKeyGroup');
+                const modelGroup = document.getElementById('modelGroup');
+                const ollamaHostGroup = document.getElementById('ollamaHostGroup');
+                const providerHint = document.getElementById('providerHint');
+                const apiKeyLabel = document.getElementById('apiKeyLabel');
 
-                saveBtn.addEventListener('click', () => {
-                    const backendUrl = document.getElementById('backendUrl').value;
-                    const provider = document.getElementById('provider').value;
-                    const apiKey = document.getElementById('apiKey').value;
+                function updateUI() {
+                    const provider = providerSelect.value;
+                    
+                    // Default visibility
+                    apiKeyGroup.classList.remove('hidden');
+                    modelGroup.classList.add('hidden');
+                    ollamaHostGroup.classList.add('hidden');
+                    providerHint.style.display = 'none';
+                    apiKeyLabel.textContent = 'API Key';
 
+                    if (provider === 'auto') {
+                        providerHint.style.display = 'block';
+                        providerHint.textContent = 'Auto-detects provider (Groq, OpenAI, Anthropic) based on API key format.';
+                    } else if (provider === 'ollama') {
+                        apiKeyGroup.classList.add('hidden');
+                        modelGroup.classList.remove('hidden');
+                        ollamaHostGroup.classList.remove('hidden');
+                    } else if (provider === 'groq') {
+                        apiKeyLabel.textContent = 'Groq API Key';
+                    } else if (provider === 'openai') {
+                        apiKeyLabel.textContent = 'OpenAI API Key';
+                        modelGroup.classList.remove('hidden');
+                    } else if (provider === 'anthropic') {
+                        apiKeyLabel.textContent = 'Anthropic API Key';
+                        modelGroup.classList.remove('hidden');
+                    } else if (provider === 'gemini') {
+                        apiKeyLabel.textContent = 'Gemini API Key';
+                        modelGroup.classList.remove('hidden');
+                    } else if (provider === 'openrouter') {
+                        apiKeyLabel.textContent = 'OpenRouter API Key';
+                        modelGroup.classList.remove('hidden');
+                    }
+                }
+
+                providerSelect.addEventListener('change', updateUI);
+                updateUI(); // Initial call
+
+                document.getElementById('saveBtn').addEventListener('click', () => {
                     vscode.postMessage({
                         command: 'save',
-                        settings: { backendUrl, provider, apiKey }
+                        settings: { 
+                            backendUrl: document.getElementById('backendUrl').value,
+                            provider: providerSelect.value,
+                            apiKey: document.getElementById('apiKey').value,
+                            model: document.getElementById('model').value,
+                            ollamaHost: document.getElementById('ollamaHost').value
+                        }
                     });
                 });
 
-                testBtn.addEventListener('click', () => {
-                    const backendUrl = document.getElementById('backendUrl').value;
-                    const apiKey = document.getElementById('apiKey').value;
-                    
+                document.getElementById('testBtn').addEventListener('click', () => {
+                    const statusDiv = document.getElementById('status');
                     statusDiv.className = 'status';
                     statusDiv.textContent = 'Testing connection...';
                     statusDiv.style.display = 'block';
 
                     vscode.postMessage({
                         command: 'test',
-                        settings: { backendUrl, apiKey }
+                        settings: { 
+                            backendUrl: document.getElementById('backendUrl').value,
+                            apiKey: document.getElementById('apiKey').value
+                        }
                     });
                 });
 
                 window.addEventListener('message', event => {
                     const message = event.data;
                     if (message.command === 'status') {
+                        const statusDiv = document.getElementById('status');
                         statusDiv.className = 'status ' + message.type;
                         statusDiv.textContent = message.text;
                     }
@@ -171,6 +235,8 @@ export class SettingsPanel {
                         await config.update("backendUrl", settings.backendUrl, vscode.ConfigurationTarget.Global);
                         await config.update("provider", settings.provider, vscode.ConfigurationTarget.Global);
                         await config.update("apiKey", settings.apiKey, vscode.ConfigurationTarget.Global);
+                        await config.update("model", settings.model, vscode.ConfigurationTarget.Global);
+                        await config.update("ollamaHost", settings.ollamaHost, vscode.ConfigurationTarget.Global);
                         
                         webview.postMessage({
                             command: 'status',
@@ -181,7 +247,6 @@ export class SettingsPanel {
 
                     case "test":
                         try {
-                            // Simple health check call
                             const controller = new AbortController();
                             const timeoutId = setTimeout(() => controller.abort(), 5000);
                             
