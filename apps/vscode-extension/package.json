@@ -4,6 +4,7 @@
   "description": "AI-native Infrastructure Intelligence for Modern DevOps",
   "version": "0.1.0",
   "publisher": "inframind",
+  "icon": "assets/logo.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/inframind/inframind.git"
@@ -52,6 +53,11 @@
           "type": "string",
           "default": "",
           "description": "User-supplied API Key for AI operations (overrides server-side keys)."
+        },
+        "inframind.backendUrl": {
+          "type": "string",
+          "default": "https://inframind-hqrl.onrender.com",
+          "description": "The URL of the InfraMind backend service."
         }
       }
     }
