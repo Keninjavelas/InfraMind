@@ -181,7 +181,7 @@ async def explain_infrastructure(request: Request, parse_request: ParseRequest):
             provider=parse_request.provider or "auto",
             api_key=parse_request.api_key,
             model=parse_request.model,
-            base_url=parse_request.base_url,
+            base_url=parse_request.base_url
         )
         # Timeout at 30 seconds
         result = await asyncio.wait_for(
