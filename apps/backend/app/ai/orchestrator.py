@@ -1,17 +1,23 @@
 from app.ai.groq_client import GroqClient
 from app.ai.multi_providers import (
-    OpenAIProvider,
     AnthropicProvider,
     GeminiProvider,
+    OllamaProvider,
+    OpenAIProvider,
     OpenRouterProvider,
-    OllamaProvider
 )
 from app.ai.prompts import cost, explain, security
 from app.schemas.infra_schema import InfraSummary
 
 
 class AIOrchestrator:
-    def __init__(self, provider: str = "groq", api_key: str = None, model: str = None, base_url: str = None):
+    def __init__(
+        self,
+        provider: str = "groq",
+        api_key: str = None,
+        model: str = None,
+        base_url: str = None,
+    ):
         self.provider = provider.lower()
         self.api_key = api_key
         self.model = model
@@ -34,21 +40,30 @@ class AIOrchestrator:
                 # Default to OpenAI if sk- pattern matches or other
                 return OpenAIProvider(api_key=self.api_key)
             else:
-                return GroqClient() # Fallback to server-side Groq
+                return GroqClient()  # Fallback to server-side Groq
 
         if self.provider == "groq":
             return GroqClient(api_key=self.api_key)
         elif self.provider == "openai":
             return OpenAIProvider(api_key=self.api_key, model=self.model or "gpt-4o")
         elif self.provider == "anthropic":
-            return AnthropicProvider(api_key=self.api_key, model=self.model or "claude-3-5-sonnet-20240620")
+            return AnthropicProvider(
+                api_key=self.api_key, model=self.model or "claude-3-5-sonnet-20240620"
+            )
         elif self.provider == "gemini":
-            return GeminiProvider(api_key=self.api_key, model=self.model or "gemini-1.5-pro")
+            return GeminiProvider(
+                api_key=self.api_key, model=self.model or "gemini-1.5-pro"
+            )
         elif self.provider == "openrouter":
-            return OpenRouterProvider(api_key=self.api_key, model=self.model or "anthropic/claude-3.5-sonnet")
+            return OpenRouterProvider(
+                api_key=self.api_key, model=self.model or "anthropic/claude-3.5-sonnet"
+            )
         elif self.provider == "ollama":
-            return OllamaProvider(host=self.base_url or "http://localhost:11434", model=self.model or "llama3")
-        
+            return OllamaProvider(
+                host=self.base_url or "http://localhost:11434",
+                model=self.model or "llama3",
+            )
+
         return GroqClient(api_key=self.api_key)
 
     def _summary_to_json(self, summary: InfraSummary) -> str:

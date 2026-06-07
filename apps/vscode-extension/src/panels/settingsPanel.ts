@@ -64,6 +64,8 @@ export class SettingsPanel {
                 .form-group.hidden { display: none; }
                 label { display: block; margin-bottom: 5px; font-size: 0.9em; opacity: 0.8; }
                 input, select { width: 100%; padding: 8px; box-sizing: border-box; background: var(--vscode-input-background); color: var(--vscode-input-foreground); border: 1px solid var(--vscode-input-border); border-radius: 2px; }
+                input:focus, select:focus { border-color: var(--vscode-focusBorder); outline: none; }
+                option { background: var(--vscode-dropdown-background); color: var(--vscode-dropdown-foreground); }
                 .button-group { display: flex; gap: 10px; margin-top: 20px; }
                 button { padding: 8px 16px; cursor: pointer; background: var(--vscode-button-background); color: var(--vscode-button-foreground); border: none; border-radius: 2px; }
                 button:hover { background: var(--vscode-button-hoverBackground); }
