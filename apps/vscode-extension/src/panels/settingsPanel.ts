@@ -133,8 +133,10 @@ export class SettingsPanel {
                 <div class="about">
                     <div>InfraMind v0.1.0</div>
                     <div>Created by <span class="creator">Aryan Kapoor / Keninjavelas</span></div>
-                    <div style="margin-top: 8px;">
-                        <a href="https://github.com/Keninjavelas/InfraMind" style="color: var(--vscode-textLink-foreground); text-decoration: none;">GitHub Repository</a>
+                    <div style="margin-top: 12px; display: flex; justify-content: center; gap: 15px;">
+                        <a href="https://infra-site-three.vercel.app/" style="color: var(--vscode-textLink-foreground); text-decoration: none;">Website</a>
+                        <a href="https://marketplace.visualstudio.com/items?itemName=aryankapoor-keninjavelas.inframind" style="color: var(--vscode-textLink-foreground); text-decoration: none;">Marketplace</a>
+                        <a href="https://github.com/Keninjavelas/InfraMind" style="color: var(--vscode-textLink-foreground); text-decoration: none;">GitHub</a>
                     </div>
                 </div>
             </div>

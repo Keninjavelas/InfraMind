@@ -2,6 +2,8 @@
 
 AI-native Infrastructure Intelligence for Terraform, Kubernetes, and Docker.
 
+[**Official Website**](https://infra-site-three.vercel.app/) | [**VS Code Marketplace**](https://marketplace.visualstudio.com/items?itemName=aryankapoor-keninjavelas.inframind)
+
 InfraMind is not a generic AI assistant. It is a **deterministic infrastructure cognition engine**. 
 
 We parse Terraform, Kubernetes, and Docker locally to build a semantic graph of your infrastructure. This local-first security model ensures your raw infrastructure code never leaves your machine. We only use AI reasoning as an optional, high-leverage layer on top of our structured intelligence.
