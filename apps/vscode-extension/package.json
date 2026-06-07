@@ -53,12 +53,12 @@
         "icon": "$(refresh)"
       }
     ],
-    "viewContainers": {
+    "viewsContainers": {
       "activitybar": [
         {
           "id": "inframind",
           "title": "InfraMind",
-          "icon": "assets/logo.png"
+          "icon": "assets/activity-icon.svg"
         }
       ]
     },
